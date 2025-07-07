@@ -2,6 +2,7 @@ package com.example.techbag.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.techbag.CheckList;
+import com.example.techbag.Constants.MyConstants;
 import com.example.techbag.R;
 
 import java.util.List;
@@ -46,7 +49,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.myViewHolder>{
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(activity, "Clicked on card.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(activity, "Clicked on card.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(), CheckList.class);
+                intent.putExtra(MyConstants.HEADER_SMALL, titles.get(position));
+                if(MyConstants.MY_SELECTIONS.equals(titles.get(position))){
+                    intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.FALSE_STRING);
+                }else{
+                    intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.TRUE_STRING);
+                }
+                view.getContext().startActivity(intent);
             }
         });
 
