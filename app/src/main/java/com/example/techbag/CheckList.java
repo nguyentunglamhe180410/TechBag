@@ -15,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.activity.result.ActivityResult;
 
 import com.example.techbag.Adapter.CheckListAdapter;
 import com.example.techbag.Constants.MyConstants;
@@ -45,6 +48,7 @@ public class CheckList extends AppCompatActivity {
     EditText txtAdd;
     Button btnAdd;
     LinearLayout linearLayout;
+    ActivityResultLauncher<Intent> activityResultLauncher;
 
     @Override
     public boolean onCreatePanelMenu(int featureId, @NonNull Menu menu) {
@@ -166,6 +170,18 @@ public class CheckList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list);
+
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        // Handle the result here
+                        Intent data = result.getData();
+                        itemsList = database.mainDao().getAll(header);
+                        updateRecycler(itemsList);
+                    }
+                }
+        );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
