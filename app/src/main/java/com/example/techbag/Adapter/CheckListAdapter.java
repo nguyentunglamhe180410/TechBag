@@ -74,7 +74,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListViewHolder> 
                         itemsList.get(position).setChecked(check);
                         notifyDataSetChanged();
                         Toast tostMessage = null;
-                        if (tostMessage == null) {
+                        if (tostMessage != null) {
                             tostMessage.cancel();
                         }
                         if (itemsList.get(position).getChecked()) {
