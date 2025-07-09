@@ -3,6 +3,7 @@ package com.example.techbag;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,7 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.SearchView;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +22,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -143,8 +147,9 @@ public class CheckList extends AppCompatActivity {
                     }).setIcon(R.drawable.ic_warning)
                     .show();
             return true;
-        } else if (item.getItemId()==R.id.btnAboutUs) {
-            intent = new Intent(this, AboutUs.class);
+        } else if (item.getItemId() == R.id.btnSourceCode) {
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://youtube.com"));
             startActivity(intent);
             return true;
         }else if (item.getItemId()==R.id.btnExit){
@@ -170,6 +175,8 @@ public class CheckList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

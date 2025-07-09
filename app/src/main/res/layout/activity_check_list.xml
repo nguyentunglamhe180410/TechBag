@@ -7,12 +7,23 @@
     android:layout_height="match_parent"
     android:background="#E3ACAC"
     tools:context=".CheckList">
-
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:titleTextColor="@android:color/white"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:layout_alignParentTop="true"/>
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recyclerView"
-        android:layout_marginBottom="60dp"/>
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/linearLayout"
+        android:clipToPadding="false"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp" />
     
     <LinearLayout
         android:layout_width="match_parent"
