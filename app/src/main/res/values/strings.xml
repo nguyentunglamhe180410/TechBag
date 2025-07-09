@@ -2,4 +2,5 @@
     <string name="app_name">TechBag</string>
     <string name="tech_bag">Tech Bag</string>
     <string name="title_activity_about_us">AboutUs</string>
+    <string name="add_item">Nhập mục cần thêm</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.techbag.Adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -67,6 +68,7 @@ public class CheckListAdapter extends RecyclerView.Adapter<CheckListViewHolder> 
                 public void onClick(View view) {
                     Boolean check = holder.checkBox.isChecked();
                     database.mainDao().checkUncheck(itemsList.get(position).getID(), check);
+                    ((Activity) context).setResult(Activity.RESULT_OK);
                     if (MyConstants.FALSE_STRING.equals(show)) {
                         itemsList = database.mainDao().getAllSelected(true);
                         notifyDataSetChanged();

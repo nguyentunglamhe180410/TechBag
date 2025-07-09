@@ -99,12 +99,12 @@ public class CheckList extends AppCompatActivity {
         //while if-else allow runtime evaluation
         if (item.getItemId() == R.id.btnMySelection) {
             intent.putExtra(MyConstants.HEADER_SMALL, MyConstants.MY_SELECTIONS);
-            intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.FALSE_STRING);
+            intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.TRUE_STRING);
             activityResultLauncher.launch(intent);
             return true;
         } else if (item.getItemId() == R.id.btnCustomList) {
-            intent.putExtra(MyConstants.HEADER_SMALL, MyConstants.MY_SELECTIONS);
-            intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.FALSE_STRING);
+            intent.putExtra(MyConstants.HEADER_SMALL, MyConstants.MY_LIST_CAMEL_CASE);
+            intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.TRUE_STRING);
             startActivity(intent);
             return true;
         }
@@ -119,7 +119,7 @@ public class CheckList extends AppCompatActivity {
                             itemsList = database.mainDao().getAll(header);
                             updateRecycler(itemsList);
                         }
-                    }).setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
+                    }).setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
 
@@ -139,7 +139,7 @@ public class CheckList extends AppCompatActivity {
                             itemsList = database.mainDao().getAll(header);
                             updateRecycler(itemsList);
                         }
-                    }).setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
+                    }).setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
 
@@ -175,6 +175,11 @@ public class CheckList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (view, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            view.setPadding(0, 0, 0, insets.bottom);
+            return WindowInsetsCompat.CONSUMED;
+        });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
