@@ -96,7 +96,7 @@ public class CheckList extends AppCompatActivity {
         if (item.getItemId() == R.id.btnMySelection) {
             intent.putExtra(MyConstants.HEADER_SMALL, MyConstants.MY_SELECTIONS);
             intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.FALSE_STRING);
-            startActivityForResult(intent,101);
+            activityResultLauncher.launch(intent);
             return true;
         } else if (item.getItemId() == R.id.btnCustomList) {
             intent.putExtra(MyConstants.HEADER_SMALL, MyConstants.MY_SELECTIONS);
@@ -106,16 +106,16 @@ public class CheckList extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.btnDeleteDefault) {
             new AlertDialog.Builder(this)
-                    .setTitle("Delete default data")
-                    .setMessage("Are you sure?\n\nThis will delete the data provided by(Pack your Bag) while installing")
-                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    .setTitle("Xóa dữ liệu mặc định")
+                    .setMessage("Bạn có chắc chắn không?\n\nLàm điều náy sẽ xóa tất cả dữ liệu mặc định")
+                    .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
                             appData.persistDataByCategory(header,true);
                             itemsList = database.mainDao().getAll(header);
                             updateRecycler(itemsList);
                         }
-                    }).setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    }).setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
 
@@ -125,17 +125,17 @@ public class CheckList extends AppCompatActivity {
             return true;
         } else if (item.getItemId()==R.id.btnReset) {
             new AlertDialog.Builder(this)
-                    .setTitle("Reset default data")
-                    .setMessage("Are you sure?\n\nThis will load the data provided by(Pack your Bag)" +
-                            "and will delete the custom data you have add in( "+header+")")
-                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    .setTitle("Cài lại dữ liệu gốc")
+                    .setMessage("Bạn có chắc chắn không?\n\nLàm điều náy sẽ cài lại tất cả dữ liệu mặc định" +
+                            "và xóa tất cả dữ liệu cá nhân của bạn ở( "+header+")")
+                    .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
                             appData.persistDataByCategory(header,false);
                             itemsList = database.mainDao().getAll(header);
                             updateRecycler(itemsList);
                         }
-                    }).setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                    }).setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
 
@@ -149,7 +149,7 @@ public class CheckList extends AppCompatActivity {
             return true;
         }else if (item.getItemId()==R.id.btnExit){
             this.finishAffinity();
-            Toast.makeText(this,"Pack your back\nExit completed",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Túi của bạn\nThoát thành công",Toast.LENGTH_SHORT).show();
             return true;
         }
 
