@@ -3,6 +3,7 @@ package com.example.techbag;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,20 +15,15 @@ import android.widget.LinearLayout;
 import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.activity.result.ActivityResult;
 
 import com.example.techbag.Adapter.CheckListAdapter;
 import com.example.techbag.Constants.MyConstants;
@@ -145,8 +141,9 @@ public class CheckList extends AppCompatActivity {
                     }).setIcon(R.drawable.ic_warning)
                     .show();
             return true;
-        } else if (item.getItemId()==R.id.btnAboutUs) {
-            intent = new Intent(this, AboutUs.class);
+        } else if (item.getItemId() == R.id.btnSourceCode) {
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("https://github.com/nguyentunglamhe180410/TechBag"));
             startActivity(intent);
             return true;
         }else if (item.getItemId()==R.id.btnExit){
