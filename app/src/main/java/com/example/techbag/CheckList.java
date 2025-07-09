@@ -13,24 +13,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+
 import androidx.appcompat.app.ActionBar;
+
 import androidx.appcompat.widget.SearchView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.activity.result.ActivityResult;
 
 import com.example.techbag.Adapter.CheckListAdapter;
 import com.example.techbag.Constants.MyConstants;
@@ -53,6 +55,7 @@ public class CheckList extends AppCompatActivity {
     Button btnAdd;
     LinearLayout linearLayout;
     ActivityResultLauncher<Intent> activityResultLauncher;
+
 
     @Override
     public boolean onCreatePanelMenu(int featureId, @NonNull Menu menu) {
@@ -149,7 +152,7 @@ public class CheckList extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.btnSourceCode) {
             intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("https://youtube.com"));
+            intent.setData(Uri.parse("https://github.com/nguyentunglamhe180410/TechBag"));
             startActivity(intent);
             return true;
         }else if (item.getItemId()==R.id.btnExit){
@@ -182,7 +185,6 @@ public class CheckList extends AppCompatActivity {
         });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {

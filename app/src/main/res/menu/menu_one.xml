@@ -8,6 +8,7 @@
     <item android:id="@+id/btnReset"
         android:title="Cài lại dữ liệu cá nhân"/>
     <item android:id="@+id/btnDeleteDefault"
+
         android:title="Xoá dữ liệu cá nhân"/>
     <item android:id="@+id/btnAboutUs"
         android:title="Về chúng tôi"/>

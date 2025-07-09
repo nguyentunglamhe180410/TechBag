@@ -7,31 +7,41 @@
     android:layout_height="match_parent"
     android:background="#E3ACAC"
     tools:context=".CheckList">
+
+
+    <!-- Thêm Toolbar -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        android:titleTextColor="@android:color/white"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:layout_alignParentTop="true"/>
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:titleTextColor="@android:color/white"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <!-- RecyclerView nằm dưới Toolbar -->
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
         android:layout_above="@id/linearLayout"
+
         android:clipToPadding="false"
         android:paddingTop="8dp"
         android:paddingBottom="8dp" />
-    
+    <!-- Layout thêm item -->
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:id="@+id/linearLayout"
         android:background="#FFD6D6">
+
         <EditText
             android:id="@+id/txtAdd"
             android:layout_width="0dp"
@@ -41,13 +51,13 @@
             android:textSize="22sp"
             android:layout_marginLeft="8dp"
             android:textStyle="bold|italic"/>
+
         <Button
             android:id="@+id/btnAdd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
-            android:background="@drawable/ic_check_circle"
-            android:layout_marginEnd="8dp"/>
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_check_circle"/>
     </LinearLayout>
-
 </RelativeLayout>
