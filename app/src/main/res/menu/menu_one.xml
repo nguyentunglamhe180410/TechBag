@@ -6,10 +6,9 @@
     <item android:id="@+id/btnCustomList"
         android:title="Tạo danh sách cá nhân"/>
     <item android:id="@+id/btnReset"
-        android:title="Cài lại dữ liệu cá nhân"/>
+        android:title="Cài lại dữ liệu gốc"/>
     <item android:id="@+id/btnDeleteDefault"
-
-        android:title="Xoá dữ liệu cá nhân"/>
+        android:title="Xóa tất cả dữ liệu hệ thống"/>
     <item android:id="@+id/btnAboutUs"
         android:title="Về chúng tôi"/>
     <item android:id="@+id/btnSourceCode"

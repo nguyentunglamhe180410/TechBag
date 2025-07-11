@@ -113,8 +113,10 @@ public class CheckList extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.btnDeleteDefault) {
             new AlertDialog.Builder(this)
-                    .setTitle("Xóa dữ liệu mặc định")
-                    .setMessage("Bạn có chắc chắn không?\n\nLàm điều náy sẽ xóa tất cả dữ liệu mặc định")
+                    .setTitle("Xóa tất cả dữ liệu hệ thống")
+                    .setMessage("Bạn có chắc chắn không?" +
+                            "\n\nLàm điều náy sẽ xóa tất cả dữ liệu hệ thống ở ("+header+") " +
+                            "\nNhững mục bạn thêm vào sẽ không bị xóa đi")
                     .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
@@ -132,9 +134,9 @@ public class CheckList extends AppCompatActivity {
             return true;
         } else if (item.getItemId()==R.id.btnReset) {
             new AlertDialog.Builder(this)
-                    .setTitle("Cài lại dữ liệu gốc")
+                    .setTitle("Khôi phục dữ liệu gốc")
                     .setMessage("Bạn có chắc chắn không?\n\nLàm điều náy sẽ cài lại tất cả dữ liệu mặc định" +
-                            "và xóa tất cả dữ liệu cá nhân của bạn ở( "+header+")")
+                            "và xóa tất cả dữ liệu cá nhân của bạn ở ("+header+") ")
                     .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
