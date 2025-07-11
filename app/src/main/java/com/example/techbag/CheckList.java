@@ -39,6 +39,7 @@ import com.example.techbag.Constants.MyConstants;
 import com.example.techbag.Data.AppData;
 import com.example.techbag.Database.RoomDb;
 import com.example.techbag.Models.Items;
+import com.example.techbag.Utils.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,9 +80,12 @@ public class CheckList extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 List<Items> finalList=new ArrayList<>();
-                for(Items items: itemsList){
-                    if(items.getItemname().toLowerCase().startsWith(newText.toLowerCase())){
-                        finalList.add(items);
+                String query = Util.removeVietnameseTones(newText.toLowerCase());
+
+                for (Items item : itemsList) {
+                    String itemName = Util.removeVietnameseTones(item.getItemname().toLowerCase());
+                    if (itemName.contains(query)) {
+                        finalList.add(item);
                     }
                 }
                 updateRecycler(finalList);
@@ -157,7 +161,7 @@ public class CheckList extends AppCompatActivity {
             return true;
         }else if (item.getItemId()==R.id.btnExit){
             this.finishAffinity();
-            Toast.makeText(this,"Túi của bạn\nThoát thành công",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Tech bag\nThoát thành công",Toast.LENGTH_SHORT).show();
             return true;
         }
 
