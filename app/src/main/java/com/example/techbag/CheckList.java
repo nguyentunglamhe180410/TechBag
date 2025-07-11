@@ -105,7 +105,7 @@ public class CheckList extends AppCompatActivity {
         //but for some reason, R.id is not treat as a constant
         //while if-else allow runtime evaluation
         if (item.getItemId() == R.id.btnMySelection) {
-            intent.putExtra(MyConstants.HEADER_SMALL, MyConstants.MY_SELECTIONS);
+            intent.putExtra(MyConstants.HEADER_SMALL, MyConstants.MY_SELECTIONS_CAMEL_CASE);
             intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.TRUE_STRING);
             activityResultLauncher.launch(intent);
             return true;
@@ -117,8 +117,10 @@ public class CheckList extends AppCompatActivity {
         }
         else if (item.getItemId() == R.id.btnDeleteDefault) {
             new AlertDialog.Builder(this)
-                    .setTitle("Xóa dữ liệu mặc định")
-                    .setMessage("Bạn có chắc chắn không?\n\nLàm điều náy sẽ xóa tất cả dữ liệu mặc định")
+                    .setTitle("Xóa tất cả dữ liệu hệ thống")
+                    .setMessage("Bạn có chắc chắn không?" +
+                            "\n\nLàm điều này sẽ xóa tất cả dữ liệu hệ thống ở ("+header+") " +
+                            "\nNhững mục bạn thêm vào sẽ không bị xóa đi")
                     .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
@@ -136,9 +138,9 @@ public class CheckList extends AppCompatActivity {
             return true;
         } else if (item.getItemId()==R.id.btnReset) {
             new AlertDialog.Builder(this)
-                    .setTitle("Cài lại dữ liệu gốc")
-                    .setMessage("Bạn có chắc chắn không?\n\nLàm điều náy sẽ cài lại tất cả dữ liệu mặc định" +
-                            "và xóa tất cả dữ liệu cá nhân của bạn ở( "+header+")")
+                    .setTitle("Khôi phục dữ liệu gốc")
+                    .setMessage("Bạn có chắc chắn không?\n\nLàm điều này sẽ cài lại tất cả dữ liệu hệ thống" +
+                            "và xóa tất cả dữ liệu cá nhân của bạn ở ("+header+") ")
                     .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
@@ -216,11 +218,19 @@ public class CheckList extends AppCompatActivity {
 
         database = RoomDb.getInstance(this);
 
-        if (MyConstants.FALSE_STRING.equals(show)) {
-            linearLayout.setVisibility(View.GONE);
+        if (isMySelectionCategory()) {
+            // If it is "Lựa chọn của tôi", show only selected items
             itemsList = database.mainDao().getAllSelected(true);
+            linearLayout.setVisibility(View.GONE); // Hide "add" bar
         } else {
-            itemsList = database.mainDao().getAll(header);
+            if (MyConstants.FALSE_STRING.equals(show)) {
+                // This is likely for sub-screens where only checked items are shown (optional)
+                itemsList = database.mainDao().getAllSelected(true);
+                linearLayout.setVisibility(View.GONE);
+            } else {
+                itemsList = database.mainDao().getAll(header);
+                linearLayout.setVisibility(View.VISIBLE);
+            }
         }
         updateRecycler(itemsList);
 
@@ -264,4 +274,8 @@ public boolean onSupportNavigateUp() {
         checkListAdapter = new CheckListAdapter(CheckList.this, itemsList, database, show);
         recyclerView.setAdapter(checkListAdapter);
     }
+    private boolean isMySelectionCategory() {
+        return MyConstants.MY_SELECTIONS_CAMEL_CASE.equals(header);
+    }
+
 }
