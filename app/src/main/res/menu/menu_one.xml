@@ -4,7 +4,7 @@
     <item android:id="@+id/btnMySelection"
         android:title="Lựa chọn của tôi"/>
     <item android:id="@+id/btnCustomList"
-        android:title="Tạo danh sách cá nhân"/>
+        android:title="Danh sách cá nhân"/>
     <item android:id="@+id/btnReset"
         android:title="Cài lại dữ liệu gốc"/>
     <item android:id="@+id/btnDeleteDefault"
