@@ -11,8 +11,6 @@
         android:title="Xóa tất cả dữ liệu hệ thống"/>
     <item android:id="@+id/btnAboutUs"
         android:title="Về chúng tôi"/>
-    <item android:id="@+id/btnSourceCode"
-        android:title="Nguồn"/>
     <item android:id="@+id/btnExit"
         android:title="Thoát"/>
     <item android:id="@+id/btnSearch"
