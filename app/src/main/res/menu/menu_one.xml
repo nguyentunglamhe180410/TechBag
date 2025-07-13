@@ -15,6 +15,9 @@
     <item
         android:id="@+id/btnImportData"
         android:title="Nhập dữ liệu" />
+    <item
+        android:id="@+id/btnScanQR"
+        android:title="Quét mã QR" />
     <item android:id="@+id/btnSourceCode"
         android:title="Nguồn"/>
     <item android:id="@+id/btnExit"

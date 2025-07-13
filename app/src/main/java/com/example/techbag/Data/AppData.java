@@ -118,9 +118,9 @@ public class AppData extends Application {
                 for(Items items : list){
                    database.mainDao().saveItem(items);
                 }
-                Toast.makeText(context, category+"Cài lại dữ liệu thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Mục " + category+": Cài lại dữ liệu thành công", Toast.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(context, category+"Cài lại dữ liệu không thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Mục " + category+": Cài lại dữ liệu không thành công", Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -152,6 +152,8 @@ public class AppData extends Application {
                 return getCarSuppliesData();
             case MyConstants.NEEDS_CAMEL_CASE:
                 return getNeedsData();
+            case MyConstants.FOOD_CAMEL_CASE:
+                return getFoodData();
             default: return new ArrayList<>();
         }
     }

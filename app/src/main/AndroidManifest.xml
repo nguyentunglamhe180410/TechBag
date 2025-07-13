@@ -33,6 +33,11 @@
             android:exported="false">
 
         </activity>
+        <activity android:name=".ShareQRActivity" />
+        <activity android:name=".ScanQRActivity" />
+        <activity android:name=".Utils.CaptureAct"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>

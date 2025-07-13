@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.ActionBar;
 
 import androidx.appcompat.widget.SearchView;
+
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -61,9 +62,9 @@ public class CheckList extends AppCompatActivity {
 
     @Override
     public boolean onCreatePanelMenu(int featureId, @NonNull Menu menu) {
-        MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.menu_one,menu);
-        if(MyConstants.MY_SELECTIONS.equals(header)){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_one, menu);
+        if (MyConstants.MY_SELECTIONS.equals(header)) {
             menu.getItem(0).setVisible(false);
             menu.getItem(2).setVisible(false);
             menu.getItem(3).setVisible(false);
@@ -71,7 +72,7 @@ public class CheckList extends AppCompatActivity {
             menu.getItem(1).setVisible(false);
         }
         MenuItem menuItem = menu.findItem(R.id.btnSearch);
-        SearchView searchView=(SearchView)menuItem.getActionView();
+        SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -80,7 +81,7 @@ public class CheckList extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                List<Items> finalList=new ArrayList<>();
+                List<Items> finalList = new ArrayList<>();
                 String query = Util.removeVietnameseTones(newText.toLowerCase());
 
                 for (Items item : itemsList) {
@@ -99,7 +100,7 @@ public class CheckList extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent = new Intent(this, CheckList.class);
-        AppData appData = new AppData(database,this);
+        AppData appData = new AppData(database, this);
 
         //using if-else instead of switch-case
         //because switch-case required constant expression at run time(Encounter error Constant expression required)
@@ -115,17 +116,16 @@ public class CheckList extends AppCompatActivity {
             intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.TRUE_STRING);
             startActivity(intent);
             return true;
-        }
-        else if (item.getItemId() == R.id.btnDeleteDefault) {
+        } else if (item.getItemId() == R.id.btnDeleteDefault) {
             new AlertDialog.Builder(this)
                     .setTitle("Xóa tất cả dữ liệu hệ thống")
                     .setMessage("Bạn có chắc chắn không?" +
-                            "\n\nLàm điều này sẽ xóa tất cả dữ liệu hệ thống ở ("+header+") " +
+                            "\n\nLàm điều này sẽ xóa tất cả dữ liệu hệ thống ở (" + header + ") " +
                             "\nNhững mục bạn thêm vào sẽ không bị xóa đi")
                     .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
-                            appData.persistDataByCategory(header,true);
+                            appData.persistDataByCategory(header, true);
                             itemsList = database.mainDao().getAll(header);
                             updateRecycler(itemsList);
                         }
@@ -137,15 +137,15 @@ public class CheckList extends AppCompatActivity {
                     }).setIcon(R.drawable.ic_warning)
                     .show();
             return true;
-        } else if (item.getItemId()==R.id.btnReset) {
+        } else if (item.getItemId() == R.id.btnReset) {
             new AlertDialog.Builder(this)
                     .setTitle("Khôi phục dữ liệu gốc")
                     .setMessage("Bạn có chắc chắn không?\n\nLàm điều này sẽ cài lại tất cả dữ liệu hệ thống" +
-                            "và xóa tất cả dữ liệu cá nhân của bạn ở ("+header+") ")
+                            "và xóa tất cả dữ liệu cá nhân của bạn ở (" + header + ") ")
                     .setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int i) {
-                            appData.persistDataByCategory(header,false);
+                            appData.persistDataByCategory(header, false);
                             itemsList = database.mainDao().getAll(header);
                             updateRecycler(itemsList);
                         }
@@ -162,84 +162,83 @@ public class CheckList extends AppCompatActivity {
             intent.setData(Uri.parse("https://github.com/nguyentunglamhe180410/TechBag"));
             startActivity(intent);
             return true;
-        }else if (item.getItemId()==R.id.btnExit) {
+        } else if (item.getItemId() == R.id.btnExit) {
             this.finishAffinity();
             Toast.makeText(this, "Tech bag\nThoát thành công", Toast.LENGTH_SHORT).show();
             return true;
-        }
-        else if (item.getItemId() == R.id.btnShareData) {
-                List<Items> selectedItems;
+        } else if (item.getItemId() == R.id.btnShareData) {
+            List<Items> selectedItems;
 
-                if (isMySelectionCategory()) {
-                    selectedItems = database.mainDao().getAllSelected(true);
-                } else {
-                    selectedItems = new ArrayList<>();
-                    for (Items i : itemsList) {
-                        if (Boolean.TRUE.equals(i.getChecked())) {
-                            selectedItems.add(i);
-                        }
+            if (isMySelectionCategory()) {
+                selectedItems = database.mainDao().getAllSelected(true);
+            } else {
+                selectedItems = new ArrayList<>();
+                for (Items i : itemsList) {
+                    if (Boolean.TRUE.equals(i.getChecked())) {
+                        selectedItems.add(i);
                     }
                 }
+            }
 
-                if (selectedItems.isEmpty()) {
-                    Toast.makeText(this, "Không có mục nào được chọn để chia sẻ", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-
-                String encodedData = ShareHelper.encodeItems(selectedItems);
-
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, encodedData);
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Chia sẻ danh sách TechBag");
-                startActivity(Intent.createChooser(shareIntent, "Chia sẻ danh sách qua..."));
+            if (selectedItems.isEmpty()) {
+                Toast.makeText(this, "Không có mục nào được chọn để chia sẻ", Toast.LENGTH_SHORT).show();
                 return true;
             }
 
-            else if (item.getItemId() == R.id.btnImportData) {
-                EditText input = new EditText(this);
-                input.setHint("Dán chuỗi chia sẻ vào đây...");
+            String encodedData = ShareHelper.encodeItems(selectedItems);
 
-                new AlertDialog.Builder(this)
-                        .setTitle("Nhập dữ liệu chia sẻ")
-                        .setView(input)
-                        .setPositiveButton("Xác nhận", (dialog, which) -> {
-                            String data = input.getText().toString().trim();
-                            try {
-                                List<Items> importedItems = ShareHelper.decodeItems(data);
-                                int count = 0;
-                                for (Items itm : importedItems) {
-                                    itm.setChecked(true);
-                                    itm.setAddedby(MyConstants.USER_SMALL);
-                                    itm.setCategory(MyConstants.MY_LIST_CAMEL_CASE);
-                                    database.mainDao().saveItem(itm);
-                                    count++;
-                                }
-                                Toast.makeText(this, "Đã nhập " + count + " mục từ chia sẻ", Toast.LENGTH_SHORT).show();
-                                if (isMySelectionCategory()) {
-                                    itemsList = database.mainDao().getAllSelected(true);
-                                } else {
-                                    itemsList = database.mainDao().getAll(header);
-                                }
-                                updateRecycler(itemsList);
-                            } catch (Exception e) {
-                                Toast.makeText(this, "Dữ liệu không hợp lệ", Toast.LENGTH_SHORT).show();
+            intent = new Intent(this, ShareQRActivity.class);
+            intent.putExtra("encoded_data", encodedData);
+            startActivity(intent);
+            return true;
+        } else if (item.getItemId() == R.id.btnImportData) {
+            EditText input = new EditText(this);
+            input.setHint("Dán chuỗi chia sẻ vào đây...");
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Nhập dữ liệu chia sẻ")
+                    .setView(input)
+                    .setPositiveButton("Xác nhận", (dialog, which) -> {
+                        String data = input.getText().toString().trim();
+                        try {
+                            List<Items> importedItems = ShareHelper.decodeItems(data);
+                            int count = 0;
+                            for (Items itm : importedItems) {
+                                itm.setChecked(true);
+                                itm.setAddedby(MyConstants.USER_SMALL);
+                                itm.setCategory(MyConstants.MY_LIST_CAMEL_CASE);
+                                database.mainDao().saveItem(itm);
+                                count++;
                             }
-                        })
-                        .setNegativeButton("Huỷ", null)
-                        .setIcon(R.drawable.ic_import)
-                        .show();
+                            Toast.makeText(this, "Đã nhập " + count + " mục từ chia sẻ", Toast.LENGTH_SHORT).show();
+                            if (isMySelectionCategory()) {
+                                itemsList = database.mainDao().getAllSelected(true);
+                            } else {
+                                itemsList = database.mainDao().getAll(header);
+                            }
+                            updateRecycler(itemsList);
+                        } catch (Exception e) {
+                            Toast.makeText(this, "Dữ liệu không hợp lệ", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .setNegativeButton("Huỷ", null)
+                    .setIcon(R.drawable.ic_import)
+                    .show();
 
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
+            return true;
+        }
+        else if (item.getItemId() == R.id.btnScanQR) {
+            startActivity(new Intent(this, ScanQRActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==101){
-            itemsList=database.mainDao().getAll(header);
+        if (requestCode == 101) {
+            itemsList = database.mainDao().getAll(header);
             updateRecycler(itemsList);
         }
     }
@@ -312,11 +311,13 @@ public class CheckList extends AppCompatActivity {
         });
 
     }
-@Override
-public boolean onSupportNavigateUp() {
+
+    @Override
+    public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-}
+    }
+
     private void addNewItem(String itemName) {
         Items item = new Items();
         item.setChecked(false);
@@ -338,6 +339,7 @@ public boolean onSupportNavigateUp() {
         checkListAdapter = new CheckListAdapter(CheckList.this, itemsList, database, show);
         recyclerView.setAdapter(checkListAdapter);
     }
+
     private boolean isMySelectionCategory() {
         return MyConstants.MY_SELECTIONS_CAMEL_CASE.equals(header);
     }
