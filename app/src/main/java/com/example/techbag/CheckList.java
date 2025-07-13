@@ -39,6 +39,7 @@ import com.example.techbag.Constants.MyConstants;
 import com.example.techbag.Data.AppData;
 import com.example.techbag.Database.RoomDb;
 import com.example.techbag.Models.Items;
+import com.example.techbag.Utils.ShareHelper;
 import com.example.techbag.Utils.Util;
 
 import java.util.ArrayList;
@@ -161,14 +162,77 @@ public class CheckList extends AppCompatActivity {
             intent.setData(Uri.parse("https://github.com/nguyentunglamhe180410/TechBag"));
             startActivity(intent);
             return true;
-        }else if (item.getItemId()==R.id.btnExit){
+        }else if (item.getItemId()==R.id.btnExit) {
             this.finishAffinity();
-            Toast.makeText(this,"Tech bag\nThoát thành công",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Tech bag\nThoát thành công", Toast.LENGTH_SHORT).show();
             return true;
         }
+        else if (item.getItemId() == R.id.btnShareData) {
+                List<Items> selectedItems;
 
+                if (isMySelectionCategory()) {
+                    selectedItems = database.mainDao().getAllSelected(true);
+                } else {
+                    selectedItems = new ArrayList<>();
+                    for (Items i : itemsList) {
+                        if (Boolean.TRUE.equals(i.getChecked())) {
+                            selectedItems.add(i);
+                        }
+                    }
+                }
 
-        return super.onOptionsItemSelected(item);
+                if (selectedItems.isEmpty()) {
+                    Toast.makeText(this, "Không có mục nào được chọn để chia sẻ", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
+                String encodedData = ShareHelper.encodeItems(selectedItems);
+
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, encodedData);
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Chia sẻ danh sách TechBag");
+                startActivity(Intent.createChooser(shareIntent, "Chia sẻ danh sách qua..."));
+                return true;
+            }
+
+            else if (item.getItemId() == R.id.btnImportData) {
+                EditText input = new EditText(this);
+                input.setHint("Dán chuỗi chia sẻ vào đây...");
+
+                new AlertDialog.Builder(this)
+                        .setTitle("Nhập dữ liệu chia sẻ")
+                        .setView(input)
+                        .setPositiveButton("Xác nhận", (dialog, which) -> {
+                            String data = input.getText().toString().trim();
+                            try {
+                                List<Items> importedItems = ShareHelper.decodeItems(data);
+                                int count = 0;
+                                for (Items itm : importedItems) {
+                                    itm.setChecked(true);
+                                    itm.setAddedby(MyConstants.USER_SMALL);
+                                    itm.setCategory(MyConstants.MY_LIST_CAMEL_CASE);
+                                    database.mainDao().saveItem(itm);
+                                    count++;
+                                }
+                                Toast.makeText(this, "Đã nhập " + count + " mục từ chia sẻ", Toast.LENGTH_SHORT).show();
+                                if (isMySelectionCategory()) {
+                                    itemsList = database.mainDao().getAllSelected(true);
+                                } else {
+                                    itemsList = database.mainDao().getAll(header);
+                                }
+                                updateRecycler(itemsList);
+                            } catch (Exception e) {
+                                Toast.makeText(this, "Dữ liệu không hợp lệ", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .setNegativeButton("Huỷ", null)
+                        .setIcon(R.drawable.ic_import)
+                        .show();
+
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -240,9 +304,9 @@ public class CheckList extends AppCompatActivity {
                 String itemName = txtAdd.getText().toString();
                 if (itemName != null && !itemName.isEmpty()) {
                     addNewItem(itemName);
-                    Toast.makeText(CheckList.this, "Item Added", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CheckList.this, "Vật phẩm đã được thêm vào", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(CheckList.this, "Empty can't be added.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CheckList.this, "Không có gì để thêm.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

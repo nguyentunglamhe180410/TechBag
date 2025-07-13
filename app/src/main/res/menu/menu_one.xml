@@ -9,6 +9,12 @@
         android:title="Cài lại dữ liệu gốc"/>
     <item android:id="@+id/btnDeleteDefault"
         android:title="Xóa tất cả dữ liệu hệ thống"/>
+    <item
+        android:id="@+id/btnShareData"
+        android:title="Chia sẻ dữ liệu" />
+    <item
+        android:id="@+id/btnImportData"
+        android:title="Nhập dữ liệu" />
     <item android:id="@+id/btnSourceCode"
         android:title="Nguồn"/>
     <item android:id="@+id/btnExit"

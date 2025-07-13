@@ -118,13 +118,13 @@ public class AppData extends Application {
                 for(Items items : list){
                    database.mainDao().saveItem(items);
                 }
-                Toast.makeText(context, category+"Reset Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, category+"Cài lại dữ liệu thành công", Toast.LENGTH_SHORT).show();
             }else {
-                Toast.makeText(context, category+"Reset Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, category+"Cài lại dữ liệu không thành công", Toast.LENGTH_SHORT).show();
             }
         }catch (Exception e){
             e.printStackTrace();
-            Toast.makeText(context, category+"Some thing went wrong", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, category+"Đã xảy ra sự cố", Toast.LENGTH_SHORT).show();
         }
     }
     private List<Items> deleteAndGetListByCategory(String category, Boolean onlyDelete){
