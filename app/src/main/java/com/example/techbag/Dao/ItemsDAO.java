@@ -36,4 +36,6 @@ public interface ItemsDAO {
 
     @Query("select * from items where checked=:checked order by id asc")
     List<Items> getAllSelected(Boolean checked);
+    @Query("SELECT DISTINCT category FROM items WHERE addedby = :addedBy")
+    List<String> getAllUserCategories(String addedBy);
 }
