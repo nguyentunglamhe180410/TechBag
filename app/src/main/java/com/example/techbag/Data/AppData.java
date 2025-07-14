@@ -81,7 +81,7 @@ public class AppData extends Application {
         List<Items> dataList = new ArrayList<>();
         dataList.clear();
         for(int i = 0; i< list.size();i++){
-            dataList.add(new Items(list.get(i),category,false));
+            dataList.add(new Items(list.get(i),category, MyConstants.SYSTEM_SMALL,false));
         }
         return dataList;
     }

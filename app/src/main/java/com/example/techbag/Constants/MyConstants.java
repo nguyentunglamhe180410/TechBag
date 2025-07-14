@@ -11,7 +11,7 @@ public class MyConstants {
 
     public static final String SHOW_SMALL = "hien_thi";
 
-    public static final String USER_SMALL = "nguoi_dung";
+    public static final String USER_SMALL = "user";
 
     public static final String SYSTEM_SMALL = "system";
 

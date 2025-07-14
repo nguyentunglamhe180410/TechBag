@@ -204,10 +204,8 @@ public class CheckList extends AppCompatActivity {
                             List<Items> importedItems = ShareHelper.decodeItems(data);
                             int count = 0;
                             for (Items itm : importedItems) {
-                                itm.setChecked(true);
-                                itm.setAddedby(MyConstants.USER_SMALL);
-                                itm.setCategory(MyConstants.MY_LIST_CAMEL_CASE);
-                                database.mainDao().saveItem(itm);
+                                Items newItem = new Items(itm.getItemname(),MyConstants.MY_LIST_CAMEL_CASE,MyConstants.USER_SMALL, true);
+                                database.mainDao().saveItem(newItem);
                                 count++;
                             }
                             Toast.makeText(this, "Đã nhập " + count + " mục từ chia sẻ", Toast.LENGTH_SHORT).show();
