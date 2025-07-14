@@ -29,8 +29,22 @@
 
         <Button
             android:id="@+id/btnCopy"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sao chép liên kết" />
+            android:text="📋 Sao chép liên kết"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="💾 Lưu vào thư viện"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="↩ Quay lại" />
     </LinearLayout>
 </ScrollView>

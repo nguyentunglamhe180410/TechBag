@@ -43,11 +43,9 @@ public class ScanQRActivity extends AppCompatActivity {
             String encodedData = result.getContents();
             try {
                 List<Items> sharedItems = ShareHelper.decodeItems(encodedData);
-                for (Items item : sharedItems) {
-                    item.setChecked(false);
-                    item.setAddedby(MyConstants.USER_SMALL);
-                    item.setCategory(MyConstants.MY_LIST_CAMEL_CASE);
-                    database.mainDao().saveItem(item);
+                for (Items itm : sharedItems) {
+                    Items newItem = new Items(itm.getItemname(),MyConstants.MY_LIST_CAMEL_CASE,MyConstants.USER_SMALL, true);
+                    database.mainDao().saveItem(newItem);
                 }
                 Toast.makeText(this, "Đã nhập " + sharedItems.size() + " mục từ QR", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {

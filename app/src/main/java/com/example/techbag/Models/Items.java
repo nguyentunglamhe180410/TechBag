@@ -24,8 +24,8 @@ public class Items implements Serializable {
     public Items() {
     }
 
-    public Items(String itemname, String category, Boolean checked) {
-        this.addedby = MyConstants.SYSTEM_SMALL;
+    public Items(String itemname, String category, String addedby, Boolean checked) {
+        this.addedby = addedby;
         this.itemname = itemname;
         this.category = category;
         this.checked = checked;

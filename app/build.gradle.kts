@@ -19,7 +19,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.techbag"
-        minSdk = 35
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
