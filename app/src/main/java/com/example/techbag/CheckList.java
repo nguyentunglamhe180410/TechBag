@@ -43,6 +43,7 @@ import com.example.techbag.Models.Items;
 import com.example.techbag.Utils.ShareHelper;
 import com.example.techbag.Utils.Util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -168,7 +169,6 @@ public class CheckList extends AppCompatActivity {
             return true;
         } else if (item.getItemId() == R.id.btnShareData) {
             List<Items> selectedItems;
-
             if (isMySelectionCategory()) {
                 selectedItems = database.mainDao().getAllSelected(true);
             } else {
@@ -185,11 +185,18 @@ public class CheckList extends AppCompatActivity {
                 return true;
             }
 
-            String encodedData = ShareHelper.encodeItems(selectedItems);
-
-            intent = new Intent(this, ShareQRActivity.class);
-            intent.putExtra("encoded_data", encodedData);
-            startActivity(intent);
+            try {
+                String encodedData = ShareHelper.encodeItems(selectedItems);
+                Intent shareIntent = new Intent(this, ShareQRActivity.class);
+                shareIntent.putExtra("encoded_data", encodedData);
+                startActivity(shareIntent);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(this,
+                        "Lỗi khi tạo dữ liệu chia sẻ, vui lòng thử lại",
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
             return true;
         } else if (item.getItemId() == R.id.btnImportData) {
             EditText input = new EditText(this);
