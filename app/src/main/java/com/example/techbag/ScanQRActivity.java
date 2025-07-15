@@ -44,12 +44,14 @@ public class ScanQRActivity extends AppCompatActivity {
             try {
                 List<Items> sharedItems = ShareHelper.decodeItems(encodedData);
                 for (Items itm : sharedItems) {
-                    Items newItem = new Items(itm.getItemname(),MyConstants.MY_LIST_CAMEL_CASE,MyConstants.USER_SMALL, true);
+                    Items newItem = new Items(itm.getItemname(), MyConstants.MY_LIST_CAMEL_CASE, MyConstants.USER_SMALL, true);
                     database.mainDao().saveItem(newItem);
                 }
                 Toast.makeText(this, "Đã nhập " + sharedItems.size() + " mục từ QR", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_OK);
             } catch (Exception e) {
                 Toast.makeText(this, "QR không hợp lệ", Toast.LENGTH_SHORT).show();
+                setResult(RESULT_CANCELED);
             }
         } else {
             Toast.makeText(this, "Không có dữ liệu được quét", Toast.LENGTH_SHORT).show();

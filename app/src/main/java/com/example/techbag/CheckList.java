@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckList extends AppCompatActivity {
+    private static final int REQUEST_SCAN_QR = 200;
 
     RecyclerView recyclerView;
     CheckListAdapter checkListAdapter;
@@ -103,10 +104,6 @@ public class CheckList extends AppCompatActivity {
         Intent intent = new Intent(this, CheckList.class);
         AppData appData = new AppData(database, this);
 
-        //using if-else instead of switch-case
-        //because switch-case required constant expression at run time(Encounter error Constant expression required)
-        //but for some reason, R.id is not treat as a constant
-        //while if-else allow runtime evaluation
         if (item.getItemId() == R.id.btnMySelection) {
             intent.putExtra(MyConstants.HEADER_SMALL, MyConstants.MY_SELECTIONS_CAMEL_CASE);
             intent.putExtra(MyConstants.SHOW_SMALL, MyConstants.TRUE_STRING);
@@ -233,7 +230,8 @@ public class CheckList extends AppCompatActivity {
             return true;
         }
         else if (item.getItemId() == R.id.btnScanQR) {
-            startActivity(new Intent(this, ScanQRActivity.class));
+            Intent scan = new Intent(this, ScanQRActivity.class);
+            startActivityForResult(scan, REQUEST_SCAN_QR);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -242,7 +240,9 @@ public class CheckList extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 101) {
+        if (requestCode == REQUEST_SCAN_QR && resultCode == RESULT_OK) {
+            header = MyConstants.MY_LIST_CAMEL_CASE;
+            getSupportActionBar().setTitle(header);
             itemsList = database.mainDao().getAll(header);
             updateRecycler(itemsList);
         }
